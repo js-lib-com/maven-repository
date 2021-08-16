@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>Maven Repository</display-name>
+	<description>Maven caching repository on private server.</description>
+
+	<listener>
+		<listener-class>js.tiny.container.servlet.TinyContainer</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>repository-servlet</servlet-name>
+		<servlet-class>com.jslib.maven.repository.RepositoryServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>repository-servlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+</web-app>

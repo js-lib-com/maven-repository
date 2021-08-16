@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true" cachingAllowed="true" antiResourceLocking="false" cacheTTL="0">
+    <Parameter name="central.repository.uri" value="https://repo1.maven.org/maven2/" />
+    <Parameter name="local.repository.dir" value="/var/www/maven.js-lib.com/" />
+</Context>
