@@ -104,13 +104,13 @@ public class RepositoryServlet extends AppServlet {
 
 		if (!file.exists()) {
 			URI fileURI = centralRepositoryURI.resolve(requestPath);
-			File tmpFile = File.createTempFile("mvn", "tmp");
+			File downloadFile = File.createTempFile("mvn", "tmp");
 			log.debug("Cache miss. Download |%s|.", fileURI);
 			
 			try {
-				Files.copy(fileURI.toURL(), tmpFile);
+				Files.copy(fileURI.toURL(), downloadFile);
 			} catch (IOException e) {
-				tmpFile.delete();
+				downloadFile.delete();
 				log.debug("Cannot load file from central repository |%s|.", fileURI);
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
@@ -122,8 +122,8 @@ public class RepositoryServlet extends AppServlet {
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
 			}
-			if (!tmpFile.renameTo(file)) {
-				log.error("Fail to rename temporary file |%s| to |%s|.", tmpFile, file);
+			if (!downloadFile.renameTo(file)) {
+				log.error("Fail to rename temporary file |%s| to |%s|.", downloadFile, file);
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
 			}
