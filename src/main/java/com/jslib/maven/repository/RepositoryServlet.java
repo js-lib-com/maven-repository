@@ -103,25 +103,26 @@ public class RepositoryServlet extends AppServlet {
 		}
 
 		if (!file.exists()) {
+			URI fileURI = centralRepositoryURI.resolve(requestPath);
+			File tmpFile = File.createTempFile("mvn", "tmp");
+			
+			log.debug("Cache miss. Download |%s|.", fileURI);
+			try {
+				Files.copy(fileURI.toURL(), tmpFile);
+			} catch (IOException e) {
+				tmpFile.delete();
+				log.debug("Cannot load file from central repository |%s|.", fileURI);
+				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return null;
+			}
+			
 			File dir = file.getParentFile();
 			if (!dir.exists() && !dir.mkdirs()) {
 				log.error("Fail to create directory |%s|.", dir);
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
 			}
-
-			URI fileURI = centralRepositoryURI.resolve(requestPath);
-			log.debug("Cache miss. Download |%s|.", fileURI);
-			try {
-				Files.copy(fileURI.toURL(), file);
-			} catch (IOException e) {
-				log.error(e);
-			}
-			if (!file.exists()) {
-				log.debug("Cannot load file from central repository |%s|.", fileURI);
-				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				return null;
-			}
+			tmpFile.renameTo(file);
 		}
 
 		return file;
