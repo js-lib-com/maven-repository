@@ -105,8 +105,8 @@ public class RepositoryServlet extends AppServlet {
 		if (!file.exists()) {
 			URI fileURI = centralRepositoryURI.resolve(requestPath);
 			File tmpFile = File.createTempFile("mvn", "tmp");
-			
 			log.debug("Cache miss. Download |%s|.", fileURI);
+			
 			try {
 				Files.copy(fileURI.toURL(), tmpFile);
 			} catch (IOException e) {
@@ -115,14 +115,18 @@ public class RepositoryServlet extends AppServlet {
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
 			}
-			
+
 			File dir = file.getParentFile();
 			if (!dir.exists() && !dir.mkdirs()) {
 				log.error("Fail to create directory |%s|.", dir);
 				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return null;
 			}
-			tmpFile.renameTo(file);
+			if (!tmpFile.renameTo(file)) {
+				log.error("Fail to rename temporary file |%s| to |%s|.", tmpFile, file);
+				httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return null;
+			}
 		}
 
 		return file;
