@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import js.log.Log;
 import js.log.LogFactory;
 import js.tiny.container.servlet.AppServlet;
