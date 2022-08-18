@@ -6,6 +6,8 @@ import java.net.URI;
 
 import com.jslib.api.log.Log;
 import com.jslib.api.log.LogFactory;
+import com.jslib.container.servlet.AppServlet;
+import com.jslib.container.servlet.RequestContext;
 import com.jslib.util.Files;
 
 import jakarta.servlet.ServletConfig;
@@ -13,8 +15,6 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import js.tiny.container.servlet.AppServlet;
-import js.tiny.container.servlet.RequestContext;
 
 public class RepositoryServlet extends AppServlet {
 	private static final long serialVersionUID = -6430637526088493779L;
